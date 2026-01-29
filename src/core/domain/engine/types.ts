@@ -6,6 +6,18 @@ export type EvaluateAnswerResult = {
   requiredSelections: number;
 };
 
+export type FocusMatch = "any" | "all";
+
+export type FocusFilter = {
+  tags: string[];
+  match: FocusMatch;
+};
+
+export type FocusFilterInput = {
+  tags: string[];
+  match?: string | null;
+};
+
 export type QuizSessionPhase = "answering" | "feedback" | "complete";
 
 export type QuizAnswer = {

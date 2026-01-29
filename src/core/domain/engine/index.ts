@@ -1,6 +1,15 @@
 export { evaluateAnswer, getRequiredSelections } from "./evaluateAnswer";
 export type { EvaluateAnswerResult } from "./types";
 export {
+  DEFAULT_FOCUS_MATCH,
+  FOCUS_MATCHES,
+  filterQuestionsByFocus,
+  isQuestionMatchingFocus,
+  normalizeFocusFilter,
+  normalizeFocusMatch,
+  normalizeFocusTags,
+} from "./focusFilter";
+export {
   advanceSession,
   createQuizSession,
   getCurrentQuestion,
@@ -15,4 +24,7 @@ export type {
   QuizProgressSummary,
   QuizSession,
   QuizSessionPhase,
+  FocusFilter,
+  FocusFilterInput,
+  FocusMatch,
 } from "./types";
