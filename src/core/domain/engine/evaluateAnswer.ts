@@ -8,6 +8,10 @@ function normalizeUnique(answers: string[]): string[] {
   return [...new Set(answers.map(normalizeAnswer))];
 }
 
+export function getRequiredSelections(correctAnswers: string[]): number {
+  return normalizeUnique(correctAnswers).length;
+}
+
 function isSameSet(left: string[], right: string[]): boolean {
   if (left.length !== right.length) {
     return false;
@@ -23,7 +27,7 @@ export function evaluateAnswer(
 ): EvaluateAnswerResult {
   const normalizedCorrect = normalizeUnique(correctAnswers);
   const normalizedSelected = normalizeUnique(selectedAnswers);
-  const requiredSelections = normalizedCorrect.length;
+  const requiredSelections = getRequiredSelections(correctAnswers);
   const isComplete = normalizedSelected.length >= requiredSelections;
   const isCorrect = isComplete && isSameSet(normalizedSelected, normalizedCorrect);
 

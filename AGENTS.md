@@ -8,9 +8,11 @@ If a rule conflicts with a suggestion, the rule wins.
 1. **Domain purity**: AI must not introduce React/Next/I/O into `src/core/domain`.
 2. **No hidden coupling**: no “magic” imports for seeds/content (explicit imports only).
 3. **Single source of truth**:
-  - architecture + folder structure: `docs/ARCHITECTURE.md`
-   - roadmap stages: `ROADMAP.md`
-   - README stays high-level and links out
+
+- architecture + folder structure: `docs/ARCHITECTURE.md`
+- roadmap stages: `ROADMAP.md`
+- README stays high-level and links out
+
 4. **Mandatory filter**: `/play` always exposes filter UI and uses URL as the contract.
 5. **No scope creep**: keep PRs small and focused.
 6. **No breaking refactors** without explicit request.
@@ -32,19 +34,18 @@ If a rule conflicts with a suggestion, the rule wins.
 
 ## Workflow rules (How AI should operate)
 
-- If AI needs code context, it must ask for the exact file(s).
 - Prefer:
-  - full content for new files
-  - minimal diffs for existing files
+  - full content for new files when logic changes
+  - minimal diffs for existing files when logic changes
+  - chat explanations Polish
+  - code comments English
 - Always include:
   - what changed
   - why
   - which tests to run
   - response format
-    - PR name
     - summary bullets
     - files new and updated
-    - changes full file for new and minimal diff for existing
     - tests commands
     - notes and risks
     - docs changed or none

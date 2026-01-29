@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { evaluateAnswer } from "../evaluateAnswer";
+import { evaluateAnswer, getRequiredSelections } from "../evaluateAnswer";
 
 describe("evaluateAnswer", () => {
   it("marks incomplete until required selections are made", () => {
@@ -30,5 +30,10 @@ describe("evaluateAnswer", () => {
 
     expect(result.isComplete).toBe(true);
     expect(result.isCorrect).toBe(false);
+  });
+
+  it("reports required selections with normalization", () => {
+    expect(getRequiredSelections(["One", "One", "Two"])).toBe(2);
+    expect(getRequiredSelections(["  Three  "])).toBe(1);
   });
 });
