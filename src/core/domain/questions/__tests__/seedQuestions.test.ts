@@ -22,6 +22,19 @@ describe("seed questions", () => {
     expect(ids.size).toBe(questions.length);
   });
 
+  it("requires at least one correct answer per question", () => {
+    const questions = listSeedQuestions();
+
+    questions.forEach((question) => {
+      expect(question.correctAnswers.length).toBeGreaterThan(0);
+      expect(
+        question.correctAnswers.every(
+          (answer) => typeof answer === "string" && answer.length > 0,
+        ),
+      ).toBe(true);
+    });
+  });
+
   it("ensures each question has exactly one base tag", () => {
     const questions = listSeedQuestions();
 
