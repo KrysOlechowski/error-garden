@@ -27,6 +27,11 @@ const traps: Trap[] = [
     summary: "Narrowing can lead to `never` in branches you assume are reachable.",
   },
   {
+    trapId: "react-stale-closure",
+    name: "Stale closure in React state",
+    summary: "Event handlers can close over outdated state values.",
+  },
+  {
     trapId: "js-implicit-conversion",
     name: "Implicit string/number conversion",
     summary: "Operators like `+` switch between concat and math based on types.",
