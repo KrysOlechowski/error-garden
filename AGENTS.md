@@ -8,7 +8,7 @@ If a rule conflicts with a suggestion, the rule wins.
 1. **Domain purity**: AI must not introduce React/Next/I/O into `src/core/domain`.
 2. **No hidden coupling**: no “magic” imports for seeds/content (explicit imports only).
 3. **Single source of truth**:
-   - architecture + folder structure: `docs/ARCHITECTURE.md`
+  - architecture + folder structure: `docs/ARCHITECTURE.md`
    - roadmap stages: `ROADMAP.md`
    - README stays high-level and links out
 4. **Mandatory filter**: `/play` always exposes filter UI and uses URL as the contract.
