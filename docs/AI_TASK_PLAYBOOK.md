@@ -19,7 +19,7 @@ This is an operational playbook. Non negotiable rules live in `AGENTS.md`.
 The AI agent must always check these files
 
 - `ROADMAP.md`
-- `src/docs/ARCHITECTURE.md`
+- `docs/ARCHITECTURE.md`
 - `AGENTS.md`
 - `PR_GUIDE.md`
 
@@ -51,14 +51,13 @@ Then AI briefly lists
 3. Make a plan in 3 to 7 steps
    - steps are short
    - in execution order
-     - create a new file in `src/docs/tasks` named after the PR
+     - create a new file in `docs/tasks` named after the PR name
      - example PR name `docs/foundation-agents-roadmap` becomes `docs_foundation-agents-roadmap.md`
      - example PR name `fix/scope-xxx` becomes `fix_scope-xxx.md`
-     - write the plan using the template from `src/docs/tasks/TASK_TEMPLATE.md`
+     - write the plan using the template from `docs/tasks/TASK_TEMPLATE.md`
 
 4. Deliver changes
    - new files
-     - full file contents
    - existing files
      - minimal patch diff
 
