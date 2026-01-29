@@ -74,7 +74,6 @@ Then AI briefly lists
 
 AI should explain complex lines in chat
 
-- briefly
 - show intent and effect
 - do not explain obvious things
 

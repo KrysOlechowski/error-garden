@@ -13,7 +13,7 @@ This document focuses on stages, scope, and outcomes.
 
 **PRs**
 
-1. 📝 `docs/foundation-agents-roadmap`
+1. 📝 `docs/foundation-agents-roadmap`✅
 
 **Done when**
 
@@ -36,7 +36,7 @@ This document focuses on stages, scope, and outcomes.
 
 **PRs**
 
-1. 🧩 `feat/domain-trap-registry`
+1. `feat/domain-trap-registry`
 2. 📚 `feat/content-seed-questions`
 3. 🧪 `test/domain-evaluate-answer`
 4. ⚙️ `feat/engine-quiz-session-flow`

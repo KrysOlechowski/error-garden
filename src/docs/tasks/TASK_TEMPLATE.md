@@ -1,19 +1,28 @@
-## TASK NAME:
+## Response format
 
-- task name
+For every PR, AI responds using this structure
 
-## WHAT:
+1. PR
+   - name
+   - scope in 1–2 sentences
 
-- what we are doing in this task (1-3 sentences)
+2. Summary
+   - 3–6 bullets of what changed
 
-## WHY:
+3. Files
+   - New
+   - Updated
 
-- reason/value
+4. Changes
+   - New files: full contents
+   - Existing files: minimal patch diff
 
-## HOW:
+5. Tests
+   - commands to run
+   - what they cover
 
-- key choices
+6. Notes
+   - risks, tradeoffs, follow-ups
 
-## NOTES:
-
--
+7. Docs
+   - docs changed or none
