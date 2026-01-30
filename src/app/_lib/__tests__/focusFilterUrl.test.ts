@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildFocusFilterSearchParams,
   parseFocusFilterParams,
+  parseFocusFilterFromSearchParams,
   serializeFocusFilter,
 } from "../focusFilterUrl";
 
@@ -27,6 +28,18 @@ describe("focus filter url helpers", () => {
 
     expect(filter.tags).toEqual(["js", "react", "ts"]);
     expect(filter.match).toBe("any");
+  });
+
+  it("reads repeated tags from URLSearchParams", () => {
+    const params = new URLSearchParams();
+    params.append("tags", "js");
+    params.append("tags", "react");
+    params.append("match", "all");
+
+    const filter = parseFocusFilterFromSearchParams(params);
+
+    expect(filter.tags).toEqual(["js", "react"]);
+    expect(filter.match).toBe("all");
   });
 
   it("builds params with a safe default match", () => {
