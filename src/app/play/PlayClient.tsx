@@ -64,6 +64,8 @@ export default function PlayClient({
   const currentQuestion = getCurrentQuestion(session);
   const requiredSelections =
     getRequiredSelectionsForCurrentQuestion(session) ?? 0;
+  const canSubmitSelection =
+    requiredSelections > 0 && selectedAnswers.length >= requiredSelections;
   const lastAnswer = getLastAnswer(session);
   const isComplete = session.phase === "complete";
   const hasQuestions = session.questions.length > 0;
@@ -126,14 +128,29 @@ export default function PlayClient({
 
     const nextSelected = [...selectedAnswers, option];
 
-    if (nextSelected.length >= requiredSelections) {
-      const nextSession = submitAnswer(session, nextSelected);
-      setSession(nextSession);
-      setSelectedAnswers([]);
+    setSelectedAnswers(nextSelected);
+  };
+
+  const handleSubmitSelection = () => {
+    if (session.phase !== "answering") {
       return;
     }
 
-    setSelectedAnswers(nextSelected);
+    if (selectedAnswers.length < requiredSelections || requiredSelections <= 0) {
+      return;
+    }
+
+    const answeredSession = submitAnswer(session, selectedAnswers);
+
+    if (answeredSession.phase !== "feedback") {
+      setSession(answeredSession);
+      return;
+    }
+
+    const advancedSession = advanceSession(answeredSession);
+
+    setSession(advancedSession);
+    setSelectedAnswers([]);
   };
 
   const handleAdvance = () => {
@@ -358,6 +375,18 @@ export default function PlayClient({
                         {PLAY_COPY.selectedLabel}: {selectedAnswers.join(", ")}
                       </div>
                     )}
+
+                    {canSubmitSelection ? (
+                      <button
+                        type="button"
+                        onClick={handleSubmitSelection}
+                        className="inline-flex w-fit items-center justify-center rounded-full border border-emerald-600 bg-emerald-50 px-5 py-2 text-sm font-semibold text-emerald-700 transition hover:border-emerald-500 dark:border-emerald-400 dark:bg-emerald-950/30 dark:text-emerald-200"
+                      >
+                        {summary.currentNumber === summary.totalQuestions
+                          ? PLAY_COPY.finishSession
+                          : PLAY_COPY.nextQuestion}
+                      </button>
+                    ) : null}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-4">
