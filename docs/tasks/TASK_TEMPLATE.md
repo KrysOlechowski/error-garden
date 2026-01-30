@@ -14,8 +14,10 @@ For every PR, AI responds using this structure
    - Updated
 
 4. Changes
-   - New files: full contents
-   - Existing files: minimal patch diff
+   - New files
+     - purpose
+     - key sections
+   - Existing files - key changes - reasoning
 
 5. Tests
    - commands to run
