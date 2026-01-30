@@ -12,6 +12,7 @@ import {
 const questionA: Question = {
   questionId: "filter-q-1",
   prompt: "Question A",
+  options: ["Alpha", "Beta", "Gamma", "Delta"],
   correctAnswers: ["Alpha"],
   explanation: "Answer A",
   trapId: "js-loose-equality",
@@ -21,6 +22,7 @@ const questionA: Question = {
 const questionB: Question = {
   questionId: "filter-q-2",
   prompt: "Question B",
+  options: ["Beta", "Alpha", "Gamma", "Delta"],
   correctAnswers: ["Beta"],
   explanation: "Answer B",
   trapId: "ts-never-narrowing",
@@ -30,6 +32,7 @@ const questionB: Question = {
 const questionC: Question = {
   questionId: "filter-q-3",
   prompt: "Question C",
+  options: ["Gamma", "Alpha", "Beta", "Delta"],
   correctAnswers: ["Gamma"],
   explanation: "Answer C",
   trapId: "react-stale-closure",
