@@ -12,10 +12,8 @@ export const PLAY_COPY = {
   questionLabel: "Question",
   requiredLabel: "Required answers",
   selectedLabel: "Your answers",
-  selectedEmpty: "No answers yet. Add one to continue.",
-  answerPlaceholder: "Type an answer and press Add",
-  addAnswer: "Add answer",
-  checkAnswer: "Check answer",
+  selectedCountLabel: "Selected",
+  selectPrompt: "Select an option to continue.",
   nextQuestion: "Next question",
   finishSession: "Finish session",
   resultCorrect: "Correct",
@@ -27,5 +25,4 @@ export const PLAY_COPY = {
   startOver: "Start over",
   emptyStateTitle: "No questions match this filter.",
   emptyStateBody: "Try removing tags or switching match mode.",
-  noticeIncomplete: "Add more answers to complete this question.",
 } as const;

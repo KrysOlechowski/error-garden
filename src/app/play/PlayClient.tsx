@@ -57,14 +57,13 @@ export default function PlayClient({
 
   const [session, setSession] = useState(initialSession);
   const [activeFilterKey, setActiveFilterKey] = useState(initialFilterKey);
-  const [draftAnswer, setDraftAnswer] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-  const [notice, setNotice] = useState<string | null>(null);
 
   const availableTags = useMemo(() => buildTagList(questions), [questions]);
   const summary = getProgressSummary(session);
   const currentQuestion = getCurrentQuestion(session);
-  const requiredSelections = getRequiredSelectionsForCurrentQuestion(session);
+  const requiredSelections =
+    getRequiredSelectionsForCurrentQuestion(session) ?? 0;
   const lastAnswer = getLastAnswer(session);
   const isComplete = session.phase === "complete";
   const hasQuestions = session.questions.length > 0;
@@ -78,9 +77,7 @@ export default function PlayClient({
 
     setSession(createQuizSession(filteredQuestions));
     setActiveFilterKey(filterKey);
-    setDraftAnswer("");
     setSelectedAnswers([]);
-    setNotice(null);
   }, [activeFilterKey, filterKey, focusFilter, questions]);
 
   const updateUrl = (nextFilter: { tags: string[]; match: FocusMatch }) => {
@@ -114,56 +111,43 @@ export default function PlayClient({
     updateUrl({ tags: focusFilter.tags, match });
   };
 
-  const handleAddAnswer = () => {
-    const trimmed = draftAnswer.trim();
-
-    if (!trimmed) {
-      return;
-    }
-
-    setSelectedAnswers((prev) => [...prev, trimmed]);
-    setDraftAnswer("");
-    setNotice(null);
-  };
-
-  const handleRemoveAnswer = (index: number) => {
-    setSelectedAnswers((prev) => prev.filter((_, itemIndex) => itemIndex !== index));
-  };
-
-  const handleSubmit = () => {
+  const handleOptionSelect = (option: string) => {
     if (session.phase !== "answering") {
       return;
     }
 
-    const nextSession = submitAnswer(session, selectedAnswers);
-
-    if (nextSession.phase === "answering") {
-      setNotice(PLAY_COPY.noticeIncomplete);
+    if (selectedAnswers.includes(option)) {
       return;
     }
 
-    setSession(nextSession);
-    setDraftAnswer("");
-    setSelectedAnswers([]);
-    setNotice(null);
+    if (requiredSelections <= 0) {
+      return;
+    }
+
+    const nextSelected = [...selectedAnswers, option];
+
+    if (nextSelected.length >= requiredSelections) {
+      const nextSession = submitAnswer(session, nextSelected);
+      setSession(nextSession);
+      setSelectedAnswers([]);
+      return;
+    }
+
+    setSelectedAnswers(nextSelected);
   };
 
   const handleAdvance = () => {
     const nextSession = advanceSession(session);
 
     setSession(nextSession);
-    setDraftAnswer("");
     setSelectedAnswers([]);
-    setNotice(null);
   };
 
   const handleRestart = () => {
     const filteredQuestions = filterQuestionsByFocus(questions, focusFilter);
 
     setSession(createQuizSession(filteredQuestions));
-    setDraftAnswer("");
     setSelectedAnswers([]);
-    setNotice(null);
   };
 
   const correctCount = session.answers.filter((answer) => answer.result.isCorrect)
@@ -172,15 +156,22 @@ export default function PlayClient({
   const tagButtonClass = (active: boolean) =>
     `rounded-full border px-3 py-1 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--play-accent)] ${
       active
-        ? "border-[var(--play-accent)] bg-[var(--play-accent)] text-white"
+        ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-950/30 dark:text-emerald-200"
         : "border-[var(--play-outline)] bg-white/70 text-[var(--play-ink)] hover:border-[var(--play-accent)]"
     }`;
 
   const matchButtonClass = (active: boolean) =>
     `rounded-2xl border px-3 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--play-accent)] ${
       active
-        ? "border-[var(--play-accent)] bg-[var(--play-accent)] text-white"
+        ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-950/30 dark:text-emerald-200"
         : "border-[var(--play-outline)] bg-white/70 text-[var(--play-ink)] hover:border-[var(--play-accent)]"
+    }`;
+
+  const optionButtonClass = (active: boolean) =>
+    `rounded-2xl border px-4 py-3 text-left text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--play-accent)] disabled:cursor-not-allowed disabled:opacity-60 ${
+      active
+        ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-950/30 dark:text-emerald-200"
+        : "border-[var(--play-outline)] bg-white/80 text-[var(--play-ink)] hover:border-[var(--play-accent)]"
     }`;
 
   return (
@@ -327,66 +318,46 @@ export default function PlayClient({
 
                 {session.phase === "answering" ? (
                   <div className="flex flex-col gap-4">
-                    <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--play-muted)]">
-                      {PLAY_COPY.requiredLabel}: {requiredSelections ?? 0}
-                    </div>
-                    <form
-                      className="flex flex-col gap-3 sm:flex-row"
-                      onSubmit={(event) => {
-                        event.preventDefault();
-                        handleAddAnswer();
-                      }}
-                    >
-                      <input
-                        value={draftAnswer}
-                        onChange={(event) => setDraftAnswer(event.target.value)}
-                        placeholder={PLAY_COPY.answerPlaceholder}
-                        className="w-full rounded-2xl border border-[var(--play-outline)] bg-white/80 px-4 py-3 text-sm text-[var(--play-ink)] outline-none transition focus:border-[var(--play-accent)]"
-                      />
-                      <button
-                        type="submit"
-                        className="inline-flex items-center justify-center rounded-2xl border border-[var(--play-outline)] bg-white/80 px-4 py-3 text-sm font-semibold text-[var(--play-ink)] transition hover:border-[var(--play-accent)]"
-                      >
-                        {PLAY_COPY.addAnswer}
-                      </button>
-                    </form>
-
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--play-muted)]">
-                        {PLAY_COPY.selectedLabel}
-                      </div>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {selectedAnswers.length === 0 ? (
-                          <span className="text-sm text-[var(--play-muted)]">
-                            {PLAY_COPY.selectedEmpty}
-                          </span>
-                        ) : (
-                          selectedAnswers.map((answer, index) => (
-                            <button
-                              key={`${answer}-${index}`}
-                              type="button"
-                              onClick={() => handleRemoveAnswer(index)}
-                              aria-label={`Remove answer ${answer}`}
-                              className="rounded-full border border-[var(--play-outline)] bg-white/80 px-3 py-1 text-sm text-[var(--play-ink)] transition hover:border-[var(--play-accent)]"
-                            >
-                              {answer}
-                            </button>
-                          ))
-                        )}
-                      </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--play-muted)]">
+                      <span>
+                        {PLAY_COPY.requiredLabel}: {requiredSelections}
+                      </span>
+                      <span>
+                        {PLAY_COPY.selectedCountLabel}: {selectedAnswers.length} /{" "}
+                        {requiredSelections}
+                      </span>
                     </div>
 
-                    {notice ? (
-                      <p className="text-sm text-amber-700">{notice}</p>
-                    ) : null}
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {(currentQuestion?.options ?? []).map((option) => {
+                        const isSelected = selectedAnswers.includes(option);
+                        const isDisabled =
+                          isSelected || selectedAnswers.length >= requiredSelections;
 
-                    <button
-                      type="button"
-                      onClick={handleSubmit}
-                      className="inline-flex w-fit items-center justify-center rounded-full bg-[var(--play-accent)] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90"
-                    >
-                      {PLAY_COPY.checkAnswer}
-                    </button>
+                        return (
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => handleOptionSelect(option)}
+                            disabled={isDisabled}
+                            aria-pressed={isSelected}
+                            className={optionButtonClass(isSelected)}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {selectedAnswers.length === 0 ? (
+                      <p className="text-sm text-[var(--play-muted)]">
+                        {PLAY_COPY.selectPrompt}
+                      </p>
+                    ) : (
+                      <div className="text-sm text-[var(--play-muted)]">
+                        {PLAY_COPY.selectedLabel}: {selectedAnswers.join(", ")}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-4">
