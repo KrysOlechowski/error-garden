@@ -50,8 +50,8 @@ export function parseFocusFilterFromSearchParams(
   searchParams: URLSearchParams,
 ): FocusFilter {
   return parseFocusFilterParams({
-    tags: searchParams.get("tags"),
-    match: searchParams.get("match"),
+    tags: searchParams.getAll("tags"),
+    match: searchParams.getAll("match"),
   });
 }
 
