@@ -1,4 +1,6 @@
 import type { Question } from "./types";
+//  tags: ["absurd", "coercion", "equality"],
+// tags: ["js", "coercion", "equality"],
 
 const seedQuestions: Question[] = [
   {
@@ -87,8 +89,7 @@ const seedQuestions: Question[] = [
   },
   {
     questionId: "seed-js-var-loop-closure-2",
-    prompt:
-      "What scope behavior of var causes common loop closure bugs?",
+    prompt: "What scope behavior of var causes common loop closure bugs?",
     options: [
       "var is function-scoped rather than block-scoped.",
       "var is block-scoped like let and const.",
@@ -137,8 +138,7 @@ const seedQuestions: Question[] = [
   },
   {
     questionId: "seed-ts-never-narrowing-1",
-    prompt:
-      "How can a TypeScript union narrow to never unexpectedly?",
+    prompt: "How can a TypeScript union narrow to never unexpectedly?",
     options: [
       "Overlapping or impossible type guards can eliminate all possibilities.",
       "Union types are always narrowed to any.",
@@ -155,8 +155,7 @@ const seedQuestions: Question[] = [
   },
   {
     questionId: "seed-ts-never-narrowing-2",
-    prompt:
-      "Why might a branch you expect to be reachable get typed as never?",
+    prompt: "Why might a branch you expect to be reachable get typed as never?",
     options: [
       "Previous checks already exhaust the union members, leaving no remaining type.",
       "Because never means the value is undefined at runtime.",

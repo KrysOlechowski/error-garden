@@ -57,9 +57,12 @@ Then AI briefly lists
      - write the plan using the template from `docs/tasks/TASK_TEMPLATE.md`
 
 4. Deliver changes
-   - new files
-   - existing files
-     - minimal patch diff
+   - New files
+   - purpose
+   - key sections
+   - Existing files
+   - key changes
+   - reasoning
 
 5. Test plan
    - which commands to run
