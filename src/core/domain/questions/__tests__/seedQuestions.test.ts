@@ -8,6 +8,10 @@ function getBaseTags(tags: string[]): string[] {
   return tags.filter((tag) => BASE_TAGS.has(tag));
 }
 
+function normalizeAnswer(answer: string): string {
+  return answer.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
 describe("seed questions", () => {
   it("provides at least 10 questions", () => {
     const questions = listSeedQuestions();
@@ -32,6 +36,36 @@ describe("seed questions", () => {
           (answer) => typeof answer === "string" && answer.length > 0,
         ),
       ).toBe(true);
+    });
+  });
+
+  it("requires exactly four options and keeps correct answers within options", () => {
+    const questions = listSeedQuestions();
+
+    questions.forEach((question) => {
+      expect(question.options).toHaveLength(4);
+      expect(
+        question.options.every(
+          (option) => typeof option === "string" && option.length > 0,
+        ),
+      ).toBe(true);
+
+      const normalizedOptions = new Set(
+        question.options.map((option) => normalizeAnswer(option)),
+      );
+      expect(normalizedOptions.size).toBe(question.options.length);
+
+      const normalizedCorrect = new Set(
+        question.correctAnswers.map((answer) => normalizeAnswer(answer)),
+      );
+      expect(normalizedCorrect.size).toBe(question.correctAnswers.length);
+      expect(question.correctAnswers.length).toBeLessThanOrEqual(
+        question.options.length,
+      );
+
+      question.correctAnswers.forEach((answer) => {
+        expect(normalizedOptions.has(normalizeAnswer(answer))).toBe(true);
+      });
     });
   });
 

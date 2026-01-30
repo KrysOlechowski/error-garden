@@ -15,6 +15,7 @@ import {
 const questionA: Question = {
   questionId: "quiz-q-1",
   prompt: "Pick both answers",
+  options: ["Alpha", "Beta", "Gamma", "Delta"],
   correctAnswers: ["Alpha", "Beta"],
   explanation: "Both are required.",
   trapId: "js-loose-equality",
@@ -24,6 +25,7 @@ const questionA: Question = {
 const questionB: Question = {
   questionId: "quiz-q-2",
   prompt: "Single answer",
+  options: ["Gamma", "Alpha", "Beta", "Delta"],
   correctAnswers: ["Gamma"],
   explanation: "Only one answer.",
   trapId: "js-this-binding",

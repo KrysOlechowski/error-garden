@@ -4,6 +4,12 @@ const seedQuestions: Question[] = [
   {
     questionId: "seed-js-loose-equality-1",
     prompt: "What is the main risk of using loose equality in JavaScript?",
+    options: [
+      "It performs type coercion before comparison, so different types can be treated as equal.",
+      "It always compares object identity for all types.",
+      "It throws a TypeError when the operand types differ.",
+      "It only compares values after converting both to numbers.",
+    ],
     correctAnswers: [
       "It performs type coercion before comparison, so different types can be treated as equal.",
     ],
@@ -16,6 +22,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-js-loose-equality-2",
     prompt:
       "Why can loose equality make two very different-looking values compare as equal?",
+    options: [
+      "Because the values are coerced to a common type before comparison.",
+      "Because it compares memory addresses instead of values.",
+      "Because it forces both values to strings and trims whitespace.",
+      "Because it ignores NaN and undefined entirely.",
+    ],
     correctAnswers: [
       "Because the values are coerced to a common type before comparison.",
     ],
@@ -28,6 +40,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-js-this-binding-1",
     prompt:
       "In a regular function call, what decides the value of this in JavaScript?",
+    options: [
+      "The call-site (how the function is invoked).",
+      "The file where the function is defined.",
+      "The variable name used to store the function.",
+      "Strict mode always sets this to the global object.",
+    ],
     correctAnswers: ["The call-site (how the function is invoked)."],
     explanation:
       "Calling a function as a method sets this to the receiver; a plain call uses the default binding.",
@@ -37,6 +55,12 @@ const seedQuestions: Question[] = [
   {
     questionId: "seed-react-stale-closure-1",
     prompt: "Why can a React event handler read stale state values?",
+    options: [
+      "Because the handler closes over state from the render when it was created.",
+      "Because React mutates state variables directly.",
+      "Because event handlers always read the latest state synchronously.",
+      "Because setState runs only on page reload.",
+    ],
     correctAnswers: [
       "Because the handler closes over state from the render when it was created.",
     ],
@@ -49,6 +73,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-js-var-loop-closure-1",
     prompt:
       "Why do callbacks created in a loop with var often see the same final value?",
+    options: [
+      "var creates a single shared binding for the loop index.",
+      "var is block-scoped so each iteration gets its own binding.",
+      "Each callback gets a new binding created by setTimeout.",
+      "Arrow functions reset the loop index on each iteration.",
+    ],
     correctAnswers: ["var creates a single shared binding for the loop index."],
     explanation:
       "All closures capture the same variable, which ends with the loop's final value.",
@@ -59,6 +89,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-js-var-loop-closure-2",
     prompt:
       "What scope behavior of var causes common loop closure bugs?",
+    options: [
+      "var is function-scoped rather than block-scoped.",
+      "var is block-scoped like let and const.",
+      "var creates a new scope per loop iteration.",
+      "var is module-scoped only.",
+    ],
     correctAnswers: ["var is function-scoped rather than block-scoped."],
     explanation:
       "Without block scope, each iteration does not get its own binding.",
@@ -68,6 +104,12 @@ const seedQuestions: Question[] = [
   {
     questionId: "seed-js-float-precision-1",
     prompt: "Why can decimal math in JavaScript yield slightly off results?",
+    options: [
+      "Numbers are IEEE-754 binary floats, so many decimals are not represented exactly.",
+      "JavaScript stores numbers as base-10 decimals exactly.",
+      "Numbers are arbitrary-precision integers by default.",
+      "The engine randomly rounds decimals to save memory.",
+    ],
     correctAnswers: [
       "Numbers are IEEE-754 binary floats, so many decimals are not represented exactly.",
     ],
@@ -79,6 +121,12 @@ const seedQuestions: Question[] = [
   {
     questionId: "seed-js-implicit-conversion-1",
     prompt: "Why can the plus operator behave inconsistently in JavaScript?",
+    options: [
+      "If either operand is a string, it concatenates; otherwise it adds numbers.",
+      "It always performs numeric addition.",
+      "It always concatenates strings.",
+      "It compares values for strict equality.",
+    ],
     correctAnswers: [
       "If either operand is a string, it concatenates; otherwise it adds numbers.",
     ],
@@ -91,6 +139,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-ts-never-narrowing-1",
     prompt:
       "How can a TypeScript union narrow to never unexpectedly?",
+    options: [
+      "Overlapping or impossible type guards can eliminate all possibilities.",
+      "Union types are always narrowed to any.",
+      "Generics always default to never.",
+      "TypeScript uses runtime values to infer types.",
+    ],
     correctAnswers: [
       "Overlapping or impossible type guards can eliminate all possibilities.",
     ],
@@ -103,6 +157,12 @@ const seedQuestions: Question[] = [
     questionId: "seed-ts-never-narrowing-2",
     prompt:
       "Why might a branch you expect to be reachable get typed as never?",
+    options: [
+      "Previous checks already exhaust the union members, leaving no remaining type.",
+      "Because never means the value is undefined at runtime.",
+      "Because TypeScript ignores earlier checks.",
+      "Because the compiler does not support unions.",
+    ],
     correctAnswers: [
       "Previous checks already exhaust the union members, leaving no remaining type.",
     ],
