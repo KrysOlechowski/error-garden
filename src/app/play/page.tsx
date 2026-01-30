@@ -4,6 +4,7 @@ import {
   parseFocusFilterParams,
   serializeFocusFilter,
 } from "@/app/_lib/focusFilterUrl";
+import { shuffleQuestionOptions } from "@/app/_lib/shuffleQuestionOptions";
 
 import PlayClient from "./PlayClient";
 
@@ -15,7 +16,7 @@ type PlayPageProps = {
 };
 
 export default function PlayPage({ searchParams }: PlayPageProps) {
-  const questions = listSeedQuestions();
+  const questions = shuffleQuestionOptions(listSeedQuestions());
   const focusFilter = parseFocusFilterParams({
     tags: searchParams.tags,
     match: searchParams.match,
